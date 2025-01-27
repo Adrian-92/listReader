@@ -1,6 +1,0 @@
-"Name";"Username";"Email";"Registration Number";"Presentation Score"
-"Klapper Adrian";"aklapper";"adrian.klapper@uni-bielefeld.de";"1234567";"2"
-"Rotter Niklas";"nrotter";"niklas.rotter@uni-bielefeld.de";"1234568";"0"
-"Kläsener Elias";"eklaesener";"elias.klaesener@uni-bielefeld.de";"1234569";"0"
-"Merkle Daniel";"dmerkle";"daniel.merkle@uni-bielefeld.de";"1234570";"2"
-"Merkle Daniel";"dmerkle";"daniel.merkle@uni-bielefeld.de";"1234570";"3"
