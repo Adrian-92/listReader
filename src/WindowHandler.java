@@ -26,7 +26,7 @@ public class WindowHandler extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("PdP-Exams");
         frame.setSize(width, height);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLayout(new BorderLayout());
 
         // set  panels and layout on side
@@ -87,6 +87,11 @@ public class WindowHandler extends JFrame {
             }
             if (studentDataset.getSortedStudents() != null && !studentDataset.getSortedStudents().isEmpty()) {
                 if (Writer.writeFiles(studentDataset.getSortedStudents())) {
+                    messageDialog("files generated");
+                }
+
+            } else if (studentDataset.getDataset() != null && !studentDataset.getDataset().isEmpty()) {
+                if (Writer.writeFiles(studentDataset.getDataset())) {
                     messageDialog("files generated");
                 }
             } else messageDialog("no students found");

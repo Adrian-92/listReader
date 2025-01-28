@@ -33,20 +33,26 @@ public class Writer {
         ArrayList<Student> zero = new ArrayList<>();
         ArrayList<Student> one = new ArrayList<>();
         ArrayList<Student> two = new ArrayList<>();
+        ArrayList<Student> invalid = new ArrayList<>();
         for (Student student : students) {
             switch (student.getExam()) {
                 case 0 -> zero.add(student);
                 case 1 -> one.add(student);
                 case 2 -> two.add(student);
-                default -> System.err.println("Name: " + student.getFirstName()
-                        + "\nExam: " + student.getExam()
-                        + " is not a valid");
+                default -> {
+                    System.err.println("Name: " + student.getFirstName() + " "
+                            + student.getLastName() +
+                            "\nExam: " + student.getExam()
+                            + " is not a valid");
+                    invalid.add(student);
+                }
             }
         }
         try {
             writeToFile("listZero.txt", zero);
             writeToFile("listOne.txt", one);
             writeToFile("listTwo.txt", two);
+            writeToFile("invalidStudents.txt", invalid);
             return true;
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());

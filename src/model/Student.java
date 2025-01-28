@@ -21,6 +21,7 @@ public class Student {
         this.lastName = "";
         this.techfak = "";
         this.email = "";
+        this.exam = -1;
     }
 
     @Override
