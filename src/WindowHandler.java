@@ -85,8 +85,8 @@ public class WindowHandler extends JFrame {
             if (studentDataset.getDataset() == null && !input.isEmpty()) {
                 studentDataset.setDataset(Reader.readFile(input));
             }
-            if (studentDataset.getDataset() != null && !studentDataset.getDataset().isEmpty()) {
-                if (Writer.writeFiles(studentDataset.getDataset())) {
+            if (studentDataset.getSortedStudents() != null && !studentDataset.getSortedStudents().isEmpty()) {
+                if (Writer.writeFiles(studentDataset.getSortedStudents())) {
                     messageDialog("files generated");
                 }
             } else messageDialog("no students found");
