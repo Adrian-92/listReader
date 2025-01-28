@@ -102,7 +102,6 @@ public class WindowHandler extends JFrame {
                 if (Writer.writeFiles(studentDataset.getSortedStudents())) {
                     messageDialog("files generated");
                 }
-
             } else if (studentDataset.getDataset() != null && !studentDataset.getDataset().isEmpty()) {
                 if (Writer.writeFiles(studentDataset.getDataset())) {
                     messageDialog("files generated");
@@ -186,6 +185,7 @@ public class WindowHandler extends JFrame {
                             "Name: " + student.getFirstName() + " " + student.getLastName() + "<br>" +
                             "Techfak: " + student.getTechfak() + "<br>" +
                             "Email: " + student.getEmail() + "<br>" +
+                            "Percentage: " + student.getPercent() + "<br>" +
                             "Exams: " + student.getExam() +
                             "</html>";
                     label.setText(text);

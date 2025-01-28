@@ -6,12 +6,14 @@ public class Student {
     private String email;
     private String techfak;
     private int exam;
+    private float percent;
 
-    public Student(String firstName, String lastName, String techfak, String email, int exam) {
+    public Student(String firstName, String lastName, String techfak, String email,float percent, int exam) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.techfak = techfak;
         this.email = email;
+        this.percent = percent;
         this.exam = exam;
     }
 
@@ -40,5 +42,9 @@ public class Student {
 
     public int getExam() {
         return exam;
+    }
+
+    public float getPercent() {
+        return percent;
     }
 }

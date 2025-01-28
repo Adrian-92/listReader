@@ -39,7 +39,7 @@ public class Reader {
             String[] splitName = words[0].split(" ");
             String firstName = splitName[1];
             String lastName = splitName[0];
-            return new Student(firstName, lastName, words[1], words[2], Integer.parseInt(words[4]));
+            return new Student(firstName, lastName, words[1], words[2], Float.parseFloat(words[3]), Integer.parseInt(words[4]));
         } catch (Exception e) {
             // if anything goes wrong this line won't be added to list
             return null;
