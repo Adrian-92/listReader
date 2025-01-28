@@ -5,6 +5,8 @@ import utils.Writer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 
 public class WindowHandler extends JFrame {
@@ -74,16 +76,27 @@ public class WindowHandler extends JFrame {
         // set action listeners
         readFile.addActionListener(e -> {
                     input = inputString.getText();
-                    studentDataset.setDataset(Reader.readFile(input));
-                    if (studentDataset.getDataset() != null || !input.isEmpty()) showEntries(studentDataset.getDataset());
-                    else messageDialog("enter valid filepath");
+                    try {
+                        studentDataset.setDataset(Reader.readFile(input));
+                        if (studentDataset.getDataset() != null || !input.isEmpty()) {
+                            showEntries(studentDataset.getDataset());
+                            inputString.setText("");
+                        }
+                    } catch (IOException | InvalidPathException ex) {
+                        System.err.println(ex.getMessage());
+                        messageDialog("enter valid filepath");
+                    }
                 }
         );
 
         saveFile.addActionListener(e -> {
             input = inputString.getText();
             if (studentDataset.getDataset() == null && !input.isEmpty()) {
-                studentDataset.setDataset(Reader.readFile(input));
+                try {
+                    studentDataset.setDataset(Reader.readFile(input));
+                } catch (IOException ex) {
+                    messageDialog("enter valid filepath");
+                }
             }
             if (studentDataset.getSortedStudents() != null && !studentDataset.getSortedStudents().isEmpty()) {
                 if (Writer.writeFiles(studentDataset.getSortedStudents())) {
