@@ -5,17 +5,20 @@ import java.util.ArrayList;
 
 public class Writer {
     private static final String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+
     /* writes output files to systems desktop folder
     change path if desired.
     Maybe make it dynamic?
     */
     public static void writeToFile(String filepath, ArrayList<Student> content) throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter(desktopPath + File.separator + filepath);
-        for (Student student : content) {
-            writer.println(student);
+        if (!content.isEmpty()) {
+            PrintWriter writer = new PrintWriter(desktopPath + File.separator + filepath);
+            for (Student student : content) {
+                writer.println(student);
+            }
+            writer.println("Number of students: " + content.size());
+            writer.close();
         }
-        writer.println("Number of students: " + content.size());
-        writer.close();
     }
 
 
