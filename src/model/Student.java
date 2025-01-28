@@ -1,4 +1,4 @@
-import java.util.Scanner;
+package model;
 
 public class Student {
     private String firstName;

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,6 +9,7 @@ public class StudentDataset {
 
     public StudentDataset() {
         this.dataset = new ArrayList<>();
+
     }
 
     public ArrayList<Student> searchStudentsByName(String name) {

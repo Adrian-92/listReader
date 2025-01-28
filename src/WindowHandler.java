@@ -1,3 +1,8 @@
+import model.Student;
+import model.StudentDataset;
+import utils.Reader;
+import utils.Writer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
