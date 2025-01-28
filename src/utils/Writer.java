@@ -1,6 +1,6 @@
 package utils;
 
-import model.Student;
+import data.Student;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,5 +1,5 @@
-import model.Student;
-import model.StudentDataset;
+import data.Student;
+import data.StudentDataset;
 import utils.Reader;
 import utils.Writer;
 

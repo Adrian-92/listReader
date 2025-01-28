@@ -1,6 +1,6 @@
 package utils;
 
-import model.Student;
+import data.Student;
 
 import java.io.IOException;
 import java.nio.file.Paths;
