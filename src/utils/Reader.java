@@ -13,8 +13,7 @@ public class Reader {
         ArrayList<Student> students = new ArrayList<>();
 
         Scanner scanner = new Scanner(Paths.get(filepath));
-        // skip headline
-        scanner.nextLine();
+
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (!line.isEmpty()) {
