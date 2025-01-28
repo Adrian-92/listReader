@@ -85,33 +85,41 @@ public class WindowHandler extends JFrame {
             if (studentDataset.getDataset() == null && !input.isEmpty()) {
                 studentDataset.setDataset(Reader.readFile(input));
             }
-            if (Writer.writeFiles(studentDataset.getDataset())) {
-                messageDialog("files generated");
-            }
+            if (studentDataset.getDataset() != null && !studentDataset.getDataset().isEmpty()) {
+                if (Writer.writeFiles(studentDataset.getDataset())) {
+                    messageDialog("files generated");
+                }
+            } else messageDialog("no students found");
+
         });
 
         search.addActionListener(e -> {
             String searchInput = inputString.getText();
             if (studentDataset.getDataset() != null) {
-                showEntries(studentDataset.searchStudentsByName(searchInput));
+                studentDataset.searchStudentsByName(searchInput);
+                showEntries(studentDataset.getSortedStudents());
             }
         });
 
         sort.addActionListener(e -> {
             if (studentDataset.getDataset() != null) {
-                showEntries(studentDataset.sortStudentsByName());
+                studentDataset.sortStudentsByName();
+                showEntries(studentDataset.getSortedStudents());
             }
         });
         exam0.addActionListener(e -> {
-            showEntries(studentDataset.showStudentsByExam(0));
+            studentDataset.showStudentsByExam(0);
+            showEntries(studentDataset.getSortedStudents());
         });
 
         exam1.addActionListener(e -> {
-            showEntries(studentDataset.showStudentsByExam(1));
+            studentDataset.showStudentsByExam(1);
+            showEntries(studentDataset.getSortedStudents());
         });
 
         exam2.addActionListener(e -> {
-            showEntries(studentDataset.showStudentsByExam(2));
+            studentDataset.showStudentsByExam(2);
+            showEntries(studentDataset.getSortedStudents());
         });
 
         frame.add(buttonPanel, BorderLayout.WEST);

@@ -6,33 +6,34 @@ import java.util.Arrays;
 public class StudentDataset {
 
     private ArrayList<Student> dataset;
+    private ArrayList<Student> sortedStudents;
 
     public StudentDataset() {
         this.dataset = new ArrayList<>();
-
+        this.sortedStudents = new ArrayList<>();
     }
 
-    public ArrayList<Student> searchStudentsByName(String name) {
+    public void searchStudentsByName(String name) {
         ArrayList<Student> searchedStudents = new ArrayList<>();
         for (Student student : this.dataset) {
             if (student.getFirstName().contains(name) || student.getLastName().contains(name)) {
                 searchedStudents.add(student);
             }
         }
-        return searchedStudents;
+        setSortedStudents(searchedStudents);
     }
 
-    public ArrayList<Student> showStudentsByExam(int exams) {
+    public void showStudentsByExam(int exams) {
         ArrayList<Student> sortedStudents = new ArrayList<>();
         for (Student student : this.dataset) {
             if (student.getExam() == exams) {
                 sortedStudents.add(student);
             }
         }
-        return sortedStudents;
+        setSortedStudents(sortedStudents);
     }
 
-    public ArrayList<Student> sortStudentsByName() {
+    public void sortStudentsByName() {
         Student[] students = this.dataset.toArray(new Student[0]);
         Student tempStudent;
         for (int i = 0; i < students.length; i++) {
@@ -45,7 +46,7 @@ public class StudentDataset {
                 }
             }
         }
-        return new ArrayList<>(Arrays.asList(students));
+        setSortedStudents(new ArrayList<>(Arrays.asList(students)));
     }
 
     public void setDataset(ArrayList<Student> dataset) {
@@ -54,5 +55,13 @@ public class StudentDataset {
 
     public ArrayList<Student> getDataset() {
         return dataset;
+    }
+
+    public void setSortedStudents(ArrayList<Student> sortedStudents) {
+        this.sortedStudents = sortedStudents;
+    }
+
+    public ArrayList<Student> getSortedStudents() {
+        return sortedStudents;
     }
 }
