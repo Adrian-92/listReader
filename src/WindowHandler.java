@@ -10,10 +10,12 @@ public class WindowHandler extends JFrame {
     private static final int smallButtonWidth = buttonWidth / 3;
 
     private static JFrame frame;
-    private static ArrayList<Student> allStudents;
     private static String input;
+    private static StudentDataset studentDataset;
 
     public static void main(String[] args) {
+
+        studentDataset = new StudentDataset();
         // set window
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,44 +66,45 @@ public class WindowHandler extends JFrame {
         // set action listeners
         readFile.addActionListener(e -> {
                     input = inputString.getText();
-                    allStudents = Reader.readFile(input);
-                    if (allStudents != null || !input.isEmpty()) showEntries(allStudents);
+                    studentDataset.setDataset(Reader.readFile(input));
+                    if (studentDataset.getDataset() != null || !input.isEmpty()) showEntries(studentDataset.getDataset());
                     else messageDialog("enter valid filepath");
                 }
         );
 
         saveFile.addActionListener(e -> {
             input = inputString.getText();
-            if (allStudents == null && !input.isEmpty()) {
-                allStudents = Reader.readFile(input);
+            if (studentDataset.getDataset() == null && !input.isEmpty()) {
+                studentDataset.setDataset(Reader.readFile(input));
             }
-            if (Writer.writeFiles(allStudents)) {
+            if (Writer.writeFiles(studentDataset.getDataset())) {
                 messageDialog("files generated");
             }
         });
 
         search.addActionListener(e -> {
             String searchInput = inputString.getText();
-            if (allStudents != null) {
-                showEntries(UIAction.searchStudentsByName(searchInput, allStudents));
+            if (studentDataset.getDataset() != null) {
+                showEntries(studentDataset.searchStudentsByName(searchInput));
             }
         });
 
         exam0.addActionListener(e -> {
-            showEntries(UIAction.showStudentsByExam(allStudents, 0));
+            showEntries(studentDataset.showStudentsByExam(0));
         });
 
         exam1.addActionListener(e -> {
-            showEntries(UIAction.showStudentsByExam(allStudents, 1));
+            showEntries(studentDataset.showStudentsByExam(1));
         });
 
         exam2.addActionListener(e -> {
-            showEntries(UIAction.showStudentsByExam(allStudents, 2));
+            showEntries(studentDataset.showStudentsByExam(2));
         });
 
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
 
     }
 
