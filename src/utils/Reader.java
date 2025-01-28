@@ -17,8 +17,13 @@ public class Reader {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (!line.isEmpty())
-                    students.add(prepareStudent(line));
+                if (!line.isEmpty()) {
+                    Student student = prepareStudent(line);
+                    // filter invalid lines
+                    if (student != null)
+                        students.add(student);
+                }
+
             }
         } catch (IOException e) {
             return null;
@@ -33,13 +38,14 @@ public class Reader {
         try {
             String newLine = input.replace("\"", "");
             String[] words = newLine.split(";");
+            // NOTE: what about double names??
             String[] splitName = words[0].split(" ");
             String firstName = splitName[1];
             String lastName = splitName[0];
             return new Student(firstName, lastName, words[1], words[2], Integer.parseInt(words[4]));
         } catch (Exception e) {
-            // if anything goes wrong there is this dummy student - just says "error" in name
-            return new Student();
+            // if anything goes wrong this line won't be added to list
+            return null;
         }
     }
 }

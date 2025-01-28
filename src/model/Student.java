@@ -15,15 +15,6 @@ public class Student {
         this.exam = exam;
     }
 
-    // dummy for error handling
-    public Student() {
-        this.firstName = "error";
-        this.lastName = "";
-        this.techfak = "";
-        this.email = "";
-        this.exam = -1;
-    }
-
     @Override
     public String toString() {
         return "Name: " + firstName + " " + lastName + "\n" +
