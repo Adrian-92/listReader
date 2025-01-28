@@ -36,6 +36,7 @@ public class WindowHandler extends JFrame {
         Button readFile = new Button("read file");
         Button saveFile = new Button("generate files");
         Button search = new Button("search by name");
+        Button sort = new Button("sort by name");
 
         Button exam0 = new Button("0 exams");
         Button exam1 = new Button("1 exam");
@@ -46,6 +47,7 @@ public class WindowHandler extends JFrame {
         readFile.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         saveFile.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         search.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        sort.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         examButtonPanel.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
 
         exam0.setPreferredSize(new Dimension(smallButtonWidth, buttonHeight));
@@ -57,6 +59,7 @@ public class WindowHandler extends JFrame {
         buttonPanel.add(readFile);
         buttonPanel.add(saveFile);
         buttonPanel.add(search);
+        buttonPanel.add(sort);
 
         examButtonPanel.add(exam0);
         examButtonPanel.add(exam1);
@@ -89,6 +92,11 @@ public class WindowHandler extends JFrame {
             }
         });
 
+        sort.addActionListener(e -> {
+            if (studentDataset.getDataset() != null) {
+                showEntries(studentDataset.sortStudentsByName());
+            }
+        });
         exam0.addActionListener(e -> {
             showEntries(studentDataset.showStudentsByExam(0));
         });

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StudentDataset {
 
@@ -29,12 +30,19 @@ public class StudentDataset {
     }
 
     public ArrayList<Student> sortStudentsByName() {
-        ArrayList<Student> sortedStudents = new ArrayList<>();
-        Student tempStudent = this.dataset.getFirst();
-        for(Student student : this.dataset) {
-            if(tempStudent.getLastName().compareTo(student.getLastName()) > 0){}
+        Student[] students = this.dataset.toArray(new Student[0]);
+        Student tempStudent;
+        for (int i = 0; i < students.length; i++) {
+            for (int j = i + 1; j < students.length; j++) {
+                if (students[i].getLastName().compareTo(students[j].getLastName()) > 0) {
+                    // swapping
+                    tempStudent = students[i];
+                    students[i] = students[j];
+                    students[j] = tempStudent;
+                }
+            }
         }
-        return sortedStudents;
+        return new ArrayList<>(Arrays.asList(students));
     }
 
     public void setDataset(ArrayList<Student> dataset) {
