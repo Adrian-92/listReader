@@ -4,15 +4,16 @@ public class Student {
     private String firstName;
     private String lastName;
     private String email;
-    private String techfak;
+    private int number;
     private int exam;
     private float percent;
 
-    public Student(String firstName, String lastName, String techfak, String email,float percent, int exam) {
+    // Name;email;Matrnr;prozPunkte;Praesentationen
+    public Student(String firstName, String lastName, String email, int number,float percent, int exam) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.techfak = techfak;
         this.email = email;
+        this.number = number;
         this.percent = percent;
         this.exam = exam;
     }
@@ -20,7 +21,7 @@ public class Student {
     @Override
     public String toString() {
         return "Name: " + firstName + " " + lastName + "\n" +
-                "Techfak: " + techfak + "\n" +
+                "Email: " + email + "\n" +
                 "Exam: " + exam + "\n";
     }
 
@@ -36,8 +37,8 @@ public class Student {
         return email;
     }
 
-    public String getTechfak() {
-        return techfak;
+    public int getNumber(){
+        return number;
     }
 
     public int getExam() {

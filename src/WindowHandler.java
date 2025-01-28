@@ -183,8 +183,8 @@ public class WindowHandler extends JFrame {
                     // set text here
                     String text = "<html>" +
                             "Name: " + student.getFirstName() + " " + student.getLastName() + "<br>" +
-                            "Techfak: " + student.getTechfak() + "<br>" +
                             "Email: " + student.getEmail() + "<br>" +
+                            "Matrikel-Nr: " + student.getNumber() + "<br>" +
                             "Percentage: " + student.getPercent() + "<br>" +
                             "Exams: " + student.getExam() +
                             "</html>";
