@@ -28,5 +28,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 ### test input ###
-list.txt
-20250128-1800.txt
+artemis.txt
