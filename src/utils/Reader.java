@@ -36,8 +36,17 @@ public class Reader {
             String[] words = newLine.split(";");
             // NOTE: what about double names??
             String[] splitName = words[0].split(" ");
-            String firstName = splitName[1];
-            String lastName = splitName[0];
+            String firstName = " ";
+            String lastName = " ";
+            if (splitName.length > 2) {
+                firstName = splitName[splitName.length - 2] + " " + splitName[splitName.length - 1];
+                lastName = splitName[0];
+            } else {
+                firstName = splitName[1];
+                lastName = splitName[0];
+            }
+
+
             // Name;email;Matrnr;prozPunkte;Praesentationen
             return new Student(firstName, lastName, words[1], Integer.parseInt(words[2]), Float.parseFloat(words[3]), Integer.parseInt(words[4]));
         } catch (Exception e) {
