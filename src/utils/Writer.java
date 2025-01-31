@@ -5,6 +5,7 @@ import data.Student;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,9 +16,11 @@ public class Writer {
     change path if desired.
     Maybe make it dynamic?
     */
-    public static void writeToFile(String filepath, ArrayList<Student> content) throws FileNotFoundException {
+    public static void writeToFile(String fileName, ArrayList<Student> content) throws FileNotFoundException {
         if (!content.isEmpty()) {
-            PrintWriter writer = new PrintWriter(desktopPath + File.separator + filepath);
+            LocalDate date = LocalDate.now();
+            String filePath = desktopPath + File.separator + fileName + "_" + date + ".txt";
+            PrintWriter writer = new PrintWriter(filePath);
             for (Student student : content) {
                 writer.println(student);
             }
@@ -50,10 +53,10 @@ public class Writer {
             }
         }
         try {
-            writeToFile("listZero.txt", zero);
-            writeToFile("listOne.txt", one);
-            writeToFile("listTwo.txt", two);
-            writeToFile("invalidStudents.txt", invalid);
+            writeToFile("zeroExams", zero);
+            writeToFile("oneExam", one);
+            writeToFile("twoExams", two);
+            writeToFile("invalidExams", invalid);
             return true;
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
@@ -63,7 +66,7 @@ public class Writer {
 
     public static boolean writeSingleFile(ArrayList<Student> students) {
         try {
-            writeToFile("list.txt", students);
+            writeToFile("list", students);
             return true;
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
