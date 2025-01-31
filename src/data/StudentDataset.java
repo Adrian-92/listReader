@@ -17,7 +17,8 @@ public class StudentDataset {
         ArrayList<Student> searchedStudents = new ArrayList<>();
         for (Student student : this.dataset) {
             String fullStudentName = student.getFirstName() + " " + student.getLastName();
-            if (fullStudentName.contains(name)) {
+            fullStudentName = fullStudentName.toLowerCase();
+            if (fullStudentName.contains(name.toLowerCase())) {
                 searchedStudents.add(student);
             }
         }

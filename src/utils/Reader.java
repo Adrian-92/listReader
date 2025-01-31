@@ -34,10 +34,12 @@ public class Reader {
         try {
             String newLine = input.replace("\"", "");
             String[] words = newLine.split(";");
-            // NOTE: what about double names??
+            /* NOTE: what about double names and double last names??
+               provided data is not helpful here
+             */
             String[] splitName = words[0].split(" ");
-            String firstName = " ";
-            String lastName = " ";
+            String firstName;
+            String lastName;
             if (splitName.length > 2) {
                 firstName = splitName[splitName.length - 2] + " " + splitName[splitName.length - 1];
                 lastName = splitName[0];
