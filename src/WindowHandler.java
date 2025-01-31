@@ -36,18 +36,14 @@ public class WindowHandler extends JFrame {
     private JMenuItem readFileMenuBtn;
     private JMenuItem generateMultipleFilesMenuBtn;
     private JMenuItem generateSingleFileMenuBtn;
-    private JPanel examButtonPanel;
     private JPanel buttonPanel;
+    private JComboBox<String> examSelection;
 
     private TextField inputString;
-
     private Button search;
     private Button sort;
-    private Button invalidStudents;
     private Button refresh;
-    private Button exam0;
-    private Button exam1;
-    private Button exam2;
+
 
     private JTextArea textField;
 
@@ -90,9 +86,10 @@ public class WindowHandler extends JFrame {
     private void showEntries(ArrayList<Student> students) {
         if (students == null) return;
         if (students.isEmpty()) {
-            messageDialog("No students found");
+            textField.setText("no students found");
             return;
         }
+        textField.setText(OPTIONS_TEXT);
         // dynamic list
         DefaultListModel<Student> studentsList = new DefaultListModel<>();
 
@@ -168,19 +165,12 @@ public class WindowHandler extends JFrame {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        examButtonPanel = new JPanel();
-        examButtonPanel.setLayout(new BoxLayout(examButtonPanel, BoxLayout.X_AXIS));
 
         // buttons and text input
         inputString = new TextField(20);
         search = new Button("search by name");
         sort = new Button("sort by name");
-        invalidStudents = new Button("show invalid students");
-        refresh = new Button("reload list");
-
-        exam0 = new Button("0 exams");
-        exam1 = new Button("1 exam");
-        exam2 = new Button("2 exams");
+        refresh = new Button("show full list");
         textField = new JTextArea(OPTIONS_TEXT);
         textField.getDocument().putProperty("filterNewlines", Boolean.FALSE);
         textField.setEditable(false);
@@ -191,13 +181,10 @@ public class WindowHandler extends JFrame {
         buttonPanel.add(inputString);
         buttonPanel.add(search);
         buttonPanel.add(sort);
-        buttonPanel.add(invalidStudents);
         buttonPanel.add(refresh);
 
-        examButtonPanel.add(exam0);
-        examButtonPanel.add(exam1);
-        examButtonPanel.add(exam2);
-        buttonPanel.add(examButtonPanel);
+        examSelection = new JComboBox<>(new String[]{"0 exams", "1 exam", "2 exams", "invalid students"});
+        buttonPanel.add(examSelection);
         buttonPanel.add(textField);
 
         frame.add(buttonPanel, BorderLayout.WEST);
@@ -220,13 +207,8 @@ public class WindowHandler extends JFrame {
         inputString.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         search.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         sort.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-        invalidStudents.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-        examButtonPanel.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-        refresh.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
 
-        exam0.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
-        exam1.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
-        exam2.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
+        refresh.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
     }
 
     public void setActionListeners() {
@@ -238,37 +220,16 @@ public class WindowHandler extends JFrame {
                 inputString.setText("");
             }
         });
-
         sort.addActionListener(e -> {
             if (studentDataset.getDataset() != null) {
                 studentDataset.sortStudentsByName();
                 showEntries(studentDataset.getSortedStudents());
             }
         });
-        invalidStudents.addActionListener(e -> {
-            studentDataset.getInvalidStudents();
-            showEntries(studentDataset.getSortedStudents());
-        });
-
         refresh.addActionListener(e -> {
             studentDataset.refresh();
             showEntries(studentDataset.getSortedStudents());
         });
-        exam0.addActionListener(e -> {
-            studentDataset.showStudentsByExam(0);
-            showEntries(studentDataset.getSortedStudents());
-        });
-
-        exam1.addActionListener(e -> {
-            studentDataset.showStudentsByExam(1);
-            showEntries(studentDataset.getSortedStudents());
-        });
-
-        exam2.addActionListener(e -> {
-            studentDataset.showStudentsByExam(2);
-            showEntries(studentDataset.getSortedStudents());
-        });
-
         readFileMenuBtn.addActionListener(e -> {
             try {
                 openFileReader();
@@ -287,6 +248,11 @@ public class WindowHandler extends JFrame {
             if (Writer.writeSingleFile(studentDataset.getSortedStudents()))
                 messageDialog("file successfully generated");
             else messageDialog("file generation  failed");
+        });
+        examSelection.addActionListener(e -> {
+            int selectedIndex = examSelection.getSelectedIndex();
+            if (selectedIndex > 2 || selectedIndex < 0) showEntries(studentDataset.getInvalidStudents());
+            else showEntries(studentDataset.showStudentsByExam(selectedIndex));
         });
 
     }
