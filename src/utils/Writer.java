@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Writer {
     private static final String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
@@ -29,7 +30,7 @@ public class Writer {
     /* only case 0, 1 and 2 to are relevant for this specific task
     possibly other cases may be added if needed
      */
-    public static boolean writeFiles(ArrayList<Student> students) {
+    public static boolean writeMultipleFiles(ArrayList<Student> students) {
         ArrayList<Student> zero = new ArrayList<>();
         ArrayList<Student> one = new ArrayList<>();
         ArrayList<Student> two = new ArrayList<>();
@@ -59,4 +60,15 @@ public class Writer {
             return false;
         }
     }
+
+    public static boolean writeSingleFile(ArrayList<Student> students) {
+        try {
+            writeToFile("list.txt", students);
+            return true;
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
 }

@@ -23,12 +23,15 @@ public class WindowHandler extends JFrame {
             """;
 
     private JFrame frame;
+
     private StudentDataset studentDataset;
 
+    // IO & interaction
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem readFileMenuBtn;
     private JMenuItem generateMultipleFilesMenuBtn;
+    private JMenuItem generateSingleFileMenuBtn;
     private JPanel examButtonPanel;
     private JPanel buttonPanel;
 
@@ -56,13 +59,16 @@ public class WindowHandler extends JFrame {
 
     public void initMenuBar() {
         menuBar = new JMenuBar();
+        menuBar.setBackground(Color.WHITE);
         menu = new JMenu("Handle Files");
         menuBar.add(menu);
         readFileMenuBtn = new JMenuItem("read new file");
         generateMultipleFilesMenuBtn = new JMenuItem("generate multiple files");
+        generateSingleFileMenuBtn = new JMenuItem("generate single file");
         menu.add(readFileMenuBtn);
         menu.addSeparator();
         menu.add(generateMultipleFilesMenuBtn);
+        menu.add(generateSingleFileMenuBtn);
 
         frame.setJMenuBar(menuBar);
     }
@@ -192,6 +198,7 @@ public class WindowHandler extends JFrame {
 
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.setLocationRelativeTo(null);
+        frame.setIconImage(new ImageIcon("src/images/logo.png").getImage());
         frame.setVisible(true);
     }
 
@@ -267,8 +274,14 @@ public class WindowHandler extends JFrame {
         });
         generateMultipleFilesMenuBtn.addActionListener(e -> {
             if (studentDataset.getSortedStudents().isEmpty()) return;
-            if (Writer.writeFiles(studentDataset.getSortedStudents()))
+            if (Writer.writeMultipleFiles(studentDataset.getSortedStudents()))
                 messageDialog("files successfully generated");
+            else messageDialog("file generation  failed");
+        });
+        generateSingleFileMenuBtn.addActionListener(e -> {
+            if (studentDataset.getSortedStudents().isEmpty()) return;
+            if (Writer.writeSingleFile(studentDataset.getSortedStudents()))
+                messageDialog("file successfully generated");
             else messageDialog("file generation  failed");
         });
 
