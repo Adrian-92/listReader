@@ -14,8 +14,12 @@ public class StudentDataset {
     }
 
     public void searchStudentsByName(String name) {
+        ArrayList<Student> data;
+        if (sortedStudents.isEmpty()) data = this.dataset;
+        else data = this.sortedStudents;
+
         ArrayList<Student> searchedStudents = new ArrayList<>();
-        for (Student student : this.dataset) {
+        for (Student student : data) {
             String fullStudentName = student.getFirstName() + " " + student.getLastName();
             fullStudentName = fullStudentName.toLowerCase();
             if (fullStudentName.contains(name.toLowerCase())) {
@@ -26,8 +30,12 @@ public class StudentDataset {
     }
 
     public void showStudentsByExam(int exams) {
+        ArrayList<Student> data;
+        if (sortedStudents.isEmpty()) data = this.dataset;
+        else data = this.sortedStudents;
+
         ArrayList<Student> sortedStudents = new ArrayList<>();
-        for (Student student : this.dataset) {
+        for (Student student : data) {
             if (student.getExam() == exams) {
                 sortedStudents.add(student);
             }
@@ -36,7 +44,10 @@ public class StudentDataset {
     }
 
     public void sortStudentsByName() {
-        Student[] students = this.dataset.toArray(new Student[0]);
+        Student[] students;
+        if (sortedStudents.isEmpty()) students = this.dataset.toArray(new Student[0]);
+        else students = this.sortedStudents.toArray(new Student[0]);
+
         Student tempStudent;
         for (int i = 0; i < students.length; i++) {
             for (int j = i + 1; j < students.length; j++) {

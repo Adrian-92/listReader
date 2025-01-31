@@ -12,14 +12,33 @@ import java.util.ArrayList;
 public class WindowHandler extends JFrame {
     private static final int SCREEN_WIDTH = 1024;
     private static final int SCREEN_HEIGHT = 512;
-    private static final int BUTTON_WIDTH = 150;
-    private static final int BUTTON_HEIGHT = 20;
+    private static final int BUTTON_WIDTH = 180;
+    private static final int BUTTON_HEIGHT = 30;
     private static final int SMALL_BUTTON_WIDTH = BUTTON_WIDTH / 3;
-    private static final String OPTIONS_TEXT = "use input field to look up students";
+    private static final String OPTIONS_TEXT = """
+            use input field to look up students
+            
+            generated files contain filtered entries""";
 
     private static JFrame frame;
     private static String input;
     private static StudentDataset studentDataset;
+
+    private static JPanel examButtonPanel;
+    private static JPanel buttonPanel;
+
+
+    private static TextField inputString;
+    private static Button readFile;
+    private static Button saveFile;
+    private static Button search;
+    private static Button sort;
+
+    private static Button exam0;
+    private static Button exam1;
+    private static Button exam2;
+    private static JTextArea textField;
+
 
     public static void main(String[] args) {
 
@@ -32,41 +51,33 @@ public class WindowHandler extends JFrame {
         frame.setResizable(true);
         frame.setLayout(new BorderLayout());
 
-
         // set  panels and layout on side
-        JPanel buttonPanel = new JPanel();
+        buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        JPanel examButtonPanel = new JPanel();
+        examButtonPanel = new JPanel();
         examButtonPanel.setLayout(new BoxLayout(examButtonPanel, BoxLayout.X_AXIS));
 
         // buttons and text input
-        TextField inputString = new TextField(20);
-        Button readFile = new Button("read file");
-        Button saveFile = new Button("generate files");
-        Button search = new Button("search by name");
-        Button sort = new Button("sort by name");
+        inputString = new TextField(20);
+        readFile = new Button("read file");
+        saveFile = new Button("generate files");
+        search = new Button("search by name");
+        sort = new Button("sort by name");
 
-        Button exam0 = new Button("0 exams");
-        Button exam1 = new Button("1 exam");
-        Button exam2 = new Button("2 exams");
-        JTextField textField = new JTextField();
-        //textField.putClientProperty("filterNewlines",false);
+        exam0 = new Button("0 exams");
+        exam1 = new Button("1 exam");
+        exam2 = new Button("2 exams");
+        textField = new JTextArea(OPTIONS_TEXT);
         textField.getDocument().putProperty("filterNewlines", Boolean.FALSE);
         textField.setEditable(false);
-        textField.setText("enter file path to input field");
+        textField.setFont(new Font("Arial", Font.PLAIN, 16));
+        textField.setText("enter file path");
+
 
         // set dimensions
-        inputString.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        readFile.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        saveFile.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        search.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        sort.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        examButtonPanel.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        setButtonDimensions();
 
-        exam0.setPreferredSize(new Dimension(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT));
-        exam1.setPreferredSize(new Dimension(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT));
-        exam2.setPreferredSize(new Dimension(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT));
 
         // add buttons to panel
         buttonPanel.add(inputString);
@@ -91,6 +102,7 @@ public class WindowHandler extends JFrame {
                             showEntries(studentDataset.getDataset());
                             inputString.setText("");
                             textField.setText(OPTIONS_TEXT);
+                            setButtonDimensions();
                         }
                     } catch (IOException | InvalidPathException ex) {
                         System.err.println(ex.getMessage());
@@ -125,6 +137,7 @@ public class WindowHandler extends JFrame {
             if (studentDataset.getDataset() != null) {
                 studentDataset.searchStudentsByName(searchInput);
                 showEntries(studentDataset.getSortedStudents());
+                inputString.setText("");
             }
         });
 
@@ -210,5 +223,27 @@ public class WindowHandler extends JFrame {
         JOptionPane.showMessageDialog(null, message);
     }
 
+
+    public static void setButtonDimensions() {
+        int textWidth = textField.getPreferredSize().width;
+        int buttonWidth = BUTTON_WIDTH;
+        int smallBtnWidth = SMALL_BUTTON_WIDTH;
+        if (textWidth > buttonWidth) {
+            buttonWidth = textWidth;
+            // sometimes it looks quite awful
+            smallBtnWidth = buttonWidth / 3;
+        }
+
+        inputString.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        readFile.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        saveFile.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        search.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        sort.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        examButtonPanel.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+
+        exam0.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
+        exam1.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
+        exam2.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
+    }
 }
 
