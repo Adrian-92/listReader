@@ -17,16 +17,22 @@ public class StudentDataset {
         setSortedStudents(this.dataset);
     }
 
-    public void searchStudentsByName(String name) {
+    public void searchStudents(String input) {
         ArrayList<Student> data;
         if (sortedStudents.isEmpty()) data = this.dataset;
         else data = this.sortedStudents;
-
+        int inputToInt = -1;
         ArrayList<Student> searchedStudents = new ArrayList<>();
         for (Student student : data) {
             String fullStudentName = student.firstName() + " " + student.lastName();
+
             fullStudentName = fullStudentName.toLowerCase();
-            if (fullStudentName.contains(name.toLowerCase())) {
+            if (input.matches("-?\\d+"))
+                inputToInt = Integer.parseInt(input);
+
+            if (fullStudentName.contains(input.toLowerCase())
+                    || student.email().toLowerCase().contains(input.toLowerCase())
+                    || student.number() == inputToInt) {
                 searchedStudents.add(student);
             }
         }

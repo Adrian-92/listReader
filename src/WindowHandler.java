@@ -62,7 +62,7 @@ public class WindowHandler extends JFrame {
         menu = new JMenu("Handle Files");
         menu.setBorder(new LineBorder(Color.GRAY, 1));
         menuBar.add(menu);
-        readFileMenuBtn = new JMenuItem("read new file");
+        readFileMenuBtn = new JMenuItem("import new file");
         generateMultipleFilesMenuBtn = new JMenuItem("generate multiple files");
         generateSingleFileMenuBtn = new JMenuItem("generate single file");
         menu.add(readFileMenuBtn);
@@ -168,9 +168,9 @@ public class WindowHandler extends JFrame {
 
         // buttons and text input
         inputString = new TextField(20);
-        search = new Button("search by name");
+        search = new Button("search");
         sort = new Button("sort by name");
-        refresh = new Button("show full list");
+        refresh = new Button("reset list");
         textField = new JTextArea(OPTIONS_TEXT);
         textField.getDocument().putProperty("filterNewlines", Boolean.FALSE);
         textField.setEditable(false);
@@ -215,7 +215,7 @@ public class WindowHandler extends JFrame {
         search.addActionListener(e -> {
             String searchInput = inputString.getText();
             if (studentDataset.getDataset() != null) {
-                studentDataset.searchStudentsByName(searchInput);
+                studentDataset.searchStudents(searchInput);
                 showEntries(studentDataset.getSortedStudents());
                 inputString.setText("");
             }
