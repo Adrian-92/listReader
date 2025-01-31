@@ -44,14 +44,14 @@ public class WindowHandler extends JFrame {
     private Button sort;
     private Button refresh;
 
-
     private JTextArea textField;
 
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         WindowHandler windowHandler = new WindowHandler();
         windowHandler.init();
+
     }
 
     public WindowHandler() {
