@@ -118,11 +118,11 @@ public class WindowHandler extends JFrame {
                 if (value instanceof Student student) {
                     // set text here
                     String text = "<html>" +
-                            "Name: " + student.getFirstName() + " " + student.getLastName() + "<br>" +
-                            "Email: " + student.getEmail() + "<br>" +
-                            "Matrikel-Nr: " + student.getNumber() + "<br>" +
-                            "Percentage: " + student.getPercent() + "% <br>" +
-                            "Exams: " + student.getExam() +
+                            "Name: " + student.firstName() + " " + student.lastName() + "<br>" +
+                            "Email: " + student.email() + "<br>" +
+                            "Matrikel-Nr: " + student.number() + "<br>" +
+                            "Percentage: " + student.percent() + "% <br>" +
+                            "Exams: " + student.exam() +
                             "</html>";
                     label.setText(text);
                 }

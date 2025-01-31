@@ -24,7 +24,7 @@ public class StudentDataset {
 
         ArrayList<Student> searchedStudents = new ArrayList<>();
         for (Student student : data) {
-            String fullStudentName = student.getFirstName() + " " + student.getLastName();
+            String fullStudentName = student.firstName() + " " + student.lastName();
             fullStudentName = fullStudentName.toLowerCase();
             if (fullStudentName.contains(name.toLowerCase())) {
                 searchedStudents.add(student);
@@ -40,7 +40,7 @@ public class StudentDataset {
 
         ArrayList<Student> sortedStudents = new ArrayList<>();
         for (Student student : data) {
-            if (student.getExam() == exams) {
+            if (student.exam() == exams) {
                 sortedStudents.add(student);
             }
         }
@@ -55,7 +55,7 @@ public class StudentDataset {
         Student tempStudent;
         for (int i = 0; i < students.length; i++) {
             for (int j = i + 1; j < students.length; j++) {
-                if (students[i].getLastName().compareTo(students[j].getLastName()) > 0) {
+                if (students[i].lastName().compareTo(students[j].lastName()) > 0) {
                     // swapping
                     tempStudent = students[i];
                     students[i] = students[j];
@@ -73,7 +73,7 @@ public class StudentDataset {
         ArrayList<Student> searchedStudents = new ArrayList<>();
 
         for (Student student : data) {
-            if (student.getExam() < 0 || student.getExam() > 2) {
+            if (student.exam() < 0 || student.exam() > 2) {
                 searchedStudents.add(student);
             }
         }

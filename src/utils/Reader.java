@@ -34,7 +34,8 @@ public class Reader {
         try {
             String newLine = input.replace("\"", "");
             String[] words = newLine.split(";");
-            /* NOTE: what about double names and double last names??
+            /*
+            NOTE: what about double names and double last names??
                provided data is not helpful here
              */
             String[] splitName = words[0].split(" ");
@@ -42,14 +43,13 @@ public class Reader {
             String lastName;
             if (splitName.length > 2) {
                 firstName = splitName[splitName.length - 2] + " " + splitName[splitName.length - 1];
-                lastName = splitName[0];
             } else {
                 firstName = splitName[1];
-                lastName = splitName[0];
             }
+            lastName = splitName[0];
 
 
-            // Name;email;Matrnr;prozPunkte;Praesentationen
+            // name, mail, matrikelnummer, percent, num Exams
             return new Student(firstName, lastName, words[1], Integer.parseInt(words[2]), Float.parseFloat(words[3]), Integer.parseInt(words[4]));
         } catch (Exception e) {
             // if anything goes wrong this line won't be added to list

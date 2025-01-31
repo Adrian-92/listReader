@@ -7,14 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Writer {
     private static final String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
 
     /* writes output files to systems desktop folder
     change path if desired.
-    Maybe make it dynamic?
     */
     public static void writeToFile(String fileName, ArrayList<Student> content) throws FileNotFoundException {
         if (!content.isEmpty()) {
@@ -39,14 +37,14 @@ public class Writer {
         ArrayList<Student> two = new ArrayList<>();
         ArrayList<Student> invalid = new ArrayList<>();
         for (Student student : students) {
-            switch (student.getExam()) {
+            switch (student.exam()) {
                 case 0 -> zero.add(student);
                 case 1 -> one.add(student);
                 case 2 -> two.add(student);
                 default -> {
-                    System.err.println("Name: " + student.getFirstName() + " "
-                            + student.getLastName() +
-                            "\nExam: " + student.getExam()
+                    System.err.println("Name: " + student.firstName() + " "
+                            + student.lastName() +
+                            "\nExam: " + student.exam()
                             + " is not a valid");
                     invalid.add(student);
                 }
