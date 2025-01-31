@@ -82,6 +82,7 @@ public class StudentDataset {
 
     public void setDataset(ArrayList<Student> dataset) {
         this.dataset = dataset;
+        refresh();
     }
 
     public ArrayList<Student> getDataset() {

@@ -5,8 +5,8 @@ import utils.Writer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 
 public class WindowHandler extends JFrame {
@@ -22,40 +22,62 @@ public class WindowHandler extends JFrame {
             generated files contain filtered entries
             """;
 
-    private static JFrame frame;
-    private static String input;
-    private static StudentDataset studentDataset;
+    private JFrame frame;
+    private StudentDataset studentDataset;
 
-    private static JPanel examButtonPanel;
-    private static JPanel buttonPanel;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem readFileMenuBtn;
+    private JMenuItem generateMultipleFilesMenuBtn;
+    private JPanel examButtonPanel;
+    private JPanel buttonPanel;
 
-    private static TextField inputString;
+    private TextField inputString;
 
-    private static Button readFile;
-    private static Button saveFile;
-    private static Button search;
-    private static Button sort;
-    private static Button invalidStudents;
-    private static Button refresh;
-    private static Button exam0;
-    private static Button exam1;
-    private static Button exam2;
+    private Button search;
+    private Button sort;
+    private Button invalidStudents;
+    private Button refresh;
+    private Button exam0;
+    private Button exam1;
+    private Button exam2;
 
-    private static JTextArea textField;
+    private JTextArea textField;
 
 
     public static void main(String[] args) {
 
-        studentDataset = new StudentDataset();
+        WindowHandler windowHandler = new WindowHandler();
+        windowHandler.init();
+    }
 
+    public WindowHandler() {
+    }
+
+    public void initMenuBar() {
+        menuBar = new JMenuBar();
+        menu = new JMenu("Handle Files");
+        menuBar.add(menu);
+        readFileMenuBtn = new JMenuItem("read new file");
+        generateMultipleFilesMenuBtn = new JMenuItem("generate multiple files");
+        menu.add(readFileMenuBtn);
+        menu.addSeparator();
+        menu.add(generateMultipleFilesMenuBtn);
+
+        frame.setJMenuBar(menuBar);
+    }
+
+    public void init() {
+        studentDataset = new StudentDataset();
         setInterface();
+        initMenuBar();
         setActionListeners();
         setButtonDimensions();
 
     }
 
     // shows a dynamic list of entries
-    private static void showEntries(ArrayList<Student> students) {
+    private void showEntries(ArrayList<Student> students) {
         if (students == null) return;
         if (students.isEmpty()) {
             messageDialog("No students found");
@@ -80,7 +102,7 @@ public class WindowHandler extends JFrame {
     }
 
     // better visualisation set text as you wish
-    private static JList<Student> getStudentJList(DefaultListModel<Student> studentsList) {
+    private JList<Student> getStudentJList(DefaultListModel<Student> studentsList) {
         JList<Student> list = new JList<>(studentsList);
 
         list.setCellRenderer(new DefaultListCellRenderer() {
@@ -104,13 +126,26 @@ public class WindowHandler extends JFrame {
         return list;
     }
 
-    public static void messageDialog(String message) {
+    public void messageDialog(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
 
+    public void openFileReader() throws IOException {
+        final JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int returnVal = fc.showOpenDialog(WindowHandler.this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            studentDataset.setDataset(Reader.readFile(file));
+            showEntries(studentDataset.getDataset());
+        } else {
+            System.out.println("Open command cancelled by user.");
+        }
+
+    }
 
     // add frame and buttons to window
-    public static void setInterface() {
+    public void setInterface() {
         // set window
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,8 +163,6 @@ public class WindowHandler extends JFrame {
 
         // buttons and text input
         inputString = new TextField(20);
-        readFile = new Button("read file");
-        saveFile = new Button("generate files");
         search = new Button("search by name");
         sort = new Button("sort by name");
         invalidStudents = new Button("show invalid students");
@@ -142,12 +175,10 @@ public class WindowHandler extends JFrame {
         textField.getDocument().putProperty("filterNewlines", Boolean.FALSE);
         textField.setEditable(false);
         textField.setFont(new Font("Arial", Font.PLAIN, 12));
-        textField.setText("enter file path");
+        textField.setText(OPTIONS_TEXT);
 
         // add buttons to panel
         buttonPanel.add(inputString);
-        buttonPanel.add(readFile);
-        buttonPanel.add(saveFile);
         buttonPanel.add(search);
         buttonPanel.add(sort);
         buttonPanel.add(invalidStudents);
@@ -164,7 +195,7 @@ public class WindowHandler extends JFrame {
         frame.setVisible(true);
     }
 
-    public static void setButtonDimensions() {
+    public void setButtonDimensions() {
         int textWidth = textField.getPreferredSize().width;
         int buttonWidth = BUTTON_WIDTH;
         int smallBtnWidth = SMALL_BUTTON_WIDTH;
@@ -176,8 +207,6 @@ public class WindowHandler extends JFrame {
 
         buttonPanel.setMaximumSize(new Dimension(buttonWidth + 3, BUTTON_HEIGHT * 5));
         inputString.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-        readFile.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-        saveFile.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         search.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         sort.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         invalidStudents.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
@@ -189,46 +218,7 @@ public class WindowHandler extends JFrame {
         exam2.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
     }
 
-    public static void setActionListeners() {
-        // set action listeners
-        readFile.addActionListener(e -> {
-                    input = inputString.getText();
-                    try {
-                        studentDataset.setDataset(Reader.readFile(input));
-                        if (studentDataset.getDataset() != null || !input.isEmpty()) {
-                            showEntries(studentDataset.getDataset());
-                            inputString.setText("");
-                            textField.setText(OPTIONS_TEXT);
-                            setButtonDimensions();
-                        }
-                    } catch (IOException | InvalidPathException ex) {
-                        System.err.println(ex.getMessage());
-                        messageDialog("enter valid filepath");
-                    }
-                }
-        );
-
-        saveFile.addActionListener(e -> {
-            input = inputString.getText();
-            if (studentDataset.getDataset() == null && !input.isEmpty()) {
-                try {
-                    studentDataset.setDataset(Reader.readFile(input));
-                } catch (IOException ex) {
-                    messageDialog("enter valid filepath");
-                }
-            }
-            if (studentDataset.getSortedStudents() != null && !studentDataset.getSortedStudents().isEmpty()) {
-                if (Writer.writeFiles(studentDataset.getSortedStudents())) {
-                    messageDialog("files successfully generated");
-                } else messageDialog("file generation failed");
-            } else if (studentDataset.getDataset() != null && !studentDataset.getDataset().isEmpty()) {
-                if (Writer.writeFiles(studentDataset.getDataset())) {
-                    messageDialog("files successfully generated");
-                } else messageDialog("file generation  failed");
-            } else messageDialog("no students found");
-
-        });
-
+    public void setActionListeners() {
         search.addActionListener(e -> {
             String searchInput = inputString.getText();
             if (studentDataset.getDataset() != null) {
@@ -268,6 +258,19 @@ public class WindowHandler extends JFrame {
             showEntries(studentDataset.getSortedStudents());
         });
 
+        readFileMenuBtn.addActionListener(e -> {
+            try {
+                openFileReader();
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+        generateMultipleFilesMenuBtn.addActionListener(e -> {
+            if (studentDataset.getSortedStudents().isEmpty()) return;
+            if (Writer.writeFiles(studentDataset.getSortedStudents()))
+                messageDialog("files successfully generated");
+            else messageDialog("file generation  failed");
+        });
+
     }
 }
-

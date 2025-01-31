@@ -2,6 +2,7 @@ package utils;
 
 import data.Student;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -9,11 +10,10 @@ import java.util.Scanner;
 
 public class Reader {
 
-    public static ArrayList<Student> readFile(String filepath) throws IOException {
+    public static ArrayList<Student> readFile(File file) throws IOException {
         ArrayList<Student> students = new ArrayList<>();
-
-        Scanner scanner = new Scanner(Paths.get(filepath));
-
+        String filePath = file.getAbsolutePath();
+        Scanner scanner = new Scanner(Paths.get(filePath));
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (!line.isEmpty()) {
