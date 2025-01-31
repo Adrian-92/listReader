@@ -4,6 +4,7 @@ import utils.Reader;
 import utils.Writer;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +17,12 @@ public class WindowHandler extends JFrame {
     private static final int BUTTON_HEIGHT = 30;
     private static final int SMALL_BUTTON_WIDTH = BUTTON_WIDTH / 3;
     private static final String OPTIONS_TEXT = """
+            NOTE:
+            use handle files menu to import dataset
+            and generate output files
+            
             use input field to look up students
             
-            NOTE:
             generated files contain filtered entries
             """;
 
@@ -59,8 +63,8 @@ public class WindowHandler extends JFrame {
 
     public void initMenuBar() {
         menuBar = new JMenuBar();
-        menuBar.setBackground(Color.WHITE);
         menu = new JMenu("Handle Files");
+        menu.setBorder(new LineBorder(Color.GRAY, 1));
         menuBar.add(menu);
         readFileMenuBtn = new JMenuItem("read new file");
         generateMultipleFilesMenuBtn = new JMenuItem("generate multiple files");
@@ -172,7 +176,7 @@ public class WindowHandler extends JFrame {
         search = new Button("search by name");
         sort = new Button("sort by name");
         invalidStudents = new Button("show invalid students");
-        refresh = new Button("refresh");
+        refresh = new Button("reload list");
 
         exam0 = new Button("0 exams");
         exam1 = new Button("1 exam");
