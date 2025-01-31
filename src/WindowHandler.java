@@ -10,11 +10,12 @@ import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 
 public class WindowHandler extends JFrame {
-    private static final int width = 1024;
-    private static final int height = 512;
-    private static final int buttonWidth = 150;
-    private static final int buttonHeight = 20;
-    private static final int smallButtonWidth = buttonWidth / 3;
+    private static final int SCREEN_WIDTH = 1024;
+    private static final int SCREEN_HEIGHT = 512;
+    private static final int BUTTON_WIDTH = 150;
+    private static final int BUTTON_HEIGHT = 20;
+    private static final int SMALL_BUTTON_WIDTH = BUTTON_WIDTH / 3;
+    private static final String OPTIONS_TEXT = "use input field to look up students";
 
     private static JFrame frame;
     private static String input;
@@ -27,9 +28,10 @@ public class WindowHandler extends JFrame {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("PdP-Exams");
-        frame.setSize(width, height);
+        frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.setResizable(true);
         frame.setLayout(new BorderLayout());
+
 
         // set  panels and layout on side
         JPanel buttonPanel = new JPanel();
@@ -48,18 +50,23 @@ public class WindowHandler extends JFrame {
         Button exam0 = new Button("0 exams");
         Button exam1 = new Button("1 exam");
         Button exam2 = new Button("2 exams");
+        JTextField textField = new JTextField();
+        //textField.putClientProperty("filterNewlines",false);
+        textField.getDocument().putProperty("filterNewlines", Boolean.FALSE);
+        textField.setEditable(false);
+        textField.setText("enter file path to input field");
 
         // set dimensions
-        inputString.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        readFile.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        saveFile.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        search.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        sort.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        examButtonPanel.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        inputString.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        readFile.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        saveFile.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        search.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        sort.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        examButtonPanel.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
 
-        exam0.setPreferredSize(new Dimension(smallButtonWidth, buttonHeight));
-        exam1.setPreferredSize(new Dimension(smallButtonWidth, buttonHeight));
-        exam2.setPreferredSize(new Dimension(smallButtonWidth, buttonHeight));
+        exam0.setPreferredSize(new Dimension(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT));
+        exam1.setPreferredSize(new Dimension(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT));
+        exam2.setPreferredSize(new Dimension(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT));
 
         // add buttons to panel
         buttonPanel.add(inputString);
@@ -73,6 +80,8 @@ public class WindowHandler extends JFrame {
         examButtonPanel.add(exam2);
         buttonPanel.add(examButtonPanel);
 
+        buttonPanel.add(textField);
+
         // set action listeners
         readFile.addActionListener(e -> {
                     input = inputString.getText();
@@ -81,6 +90,7 @@ public class WindowHandler extends JFrame {
                         if (studentDataset.getDataset() != null || !input.isEmpty()) {
                             showEntries(studentDataset.getDataset());
                             inputString.setText("");
+                            textField.setText(OPTIONS_TEXT);
                         }
                     } catch (IOException | InvalidPathException ex) {
                         System.err.println(ex.getMessage());
