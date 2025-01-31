@@ -18,7 +18,9 @@ public class WindowHandler extends JFrame {
     private static final String OPTIONS_TEXT = """
             use input field to look up students
             
-            generated files contain filtered entries""";
+            NOTE:
+            generated files contain filtered entries
+            """;
 
     private static JFrame frame;
     private static String input;
@@ -33,10 +35,14 @@ public class WindowHandler extends JFrame {
     private static Button saveFile;
     private static Button search;
     private static Button sort;
+    private static Button invalidStudents;
+    private static Button refresh;
+
 
     private static Button exam0;
     private static Button exam1;
     private static Button exam2;
+
     private static JTextArea textField;
 
 
@@ -64,6 +70,8 @@ public class WindowHandler extends JFrame {
         saveFile = new Button("generate files");
         search = new Button("search by name");
         sort = new Button("sort by name");
+        invalidStudents = new Button("show invalid students");
+        refresh = new Button("refresh");
 
         exam0 = new Button("0 exams");
         exam1 = new Button("1 exam");
@@ -71,7 +79,7 @@ public class WindowHandler extends JFrame {
         textField = new JTextArea(OPTIONS_TEXT);
         textField.getDocument().putProperty("filterNewlines", Boolean.FALSE);
         textField.setEditable(false);
-        textField.setFont(new Font("Arial", Font.PLAIN, 16));
+        textField.setFont(new Font("Arial", Font.PLAIN, 12));
         textField.setText("enter file path");
 
 
@@ -85,6 +93,8 @@ public class WindowHandler extends JFrame {
         buttonPanel.add(saveFile);
         buttonPanel.add(search);
         buttonPanel.add(sort);
+        buttonPanel.add(invalidStudents);
+        buttonPanel.add(refresh);
 
         examButtonPanel.add(exam0);
         examButtonPanel.add(exam1);
@@ -146,6 +156,15 @@ public class WindowHandler extends JFrame {
                 studentDataset.sortStudentsByName();
                 showEntries(studentDataset.getSortedStudents());
             }
+        });
+        invalidStudents.addActionListener(e -> {
+            studentDataset.getInvalidStudents();
+            showEntries(studentDataset.getSortedStudents());
+        });
+
+        refresh.addActionListener(e -> {
+            studentDataset.refresh();
+            showEntries(studentDataset.getSortedStudents());
         });
         exam0.addActionListener(e -> {
             studentDataset.showStudentsByExam(0);
@@ -234,12 +253,15 @@ public class WindowHandler extends JFrame {
             smallBtnWidth = buttonWidth / 3;
         }
 
+        buttonPanel.setMaximumSize(new Dimension(buttonWidth + 3, BUTTON_HEIGHT * 5));
         inputString.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         readFile.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         saveFile.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         search.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         sort.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        invalidStudents.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         examButtonPanel.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        refresh.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
 
         exam0.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));
         exam1.setPreferredSize(new Dimension(smallBtnWidth, BUTTON_HEIGHT));

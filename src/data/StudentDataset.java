@@ -13,6 +13,10 @@ public class StudentDataset {
         this.sortedStudents = new ArrayList<>();
     }
 
+    public void refresh() {
+        setSortedStudents(this.dataset);
+    }
+
     public void searchStudentsByName(String name) {
         ArrayList<Student> data;
         if (sortedStudents.isEmpty()) data = this.dataset;
@@ -60,6 +64,20 @@ public class StudentDataset {
             }
         }
         setSortedStudents(new ArrayList<>(Arrays.asList(students)));
+    }
+
+    public void getInvalidStudents() {
+        ArrayList<Student> data;
+        if (sortedStudents.isEmpty()) data = this.dataset;
+        else data = this.sortedStudents;
+        ArrayList<Student> searchedStudents = new ArrayList<>();
+
+        for (Student student : data) {
+            if (student.getExam() < 0 || student.getExam() > 2) {
+                searchedStudents.add(student);
+            }
+        }
+        setSortedStudents(searchedStudents);
     }
 
     public void setDataset(ArrayList<Student> dataset) {
