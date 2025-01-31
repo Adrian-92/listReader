@@ -6,6 +6,7 @@ import utils.Writer;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -212,14 +213,16 @@ public class WindowHandler extends JFrame {
     }
 
     public void setActionListeners() {
-        search.addActionListener(e -> {
+        ActionListener searchAction = e -> {
             String searchInput = inputString.getText();
-            if (studentDataset.getDataset() != null) {
+            if (!searchInput.isEmpty()) {
                 studentDataset.searchStudents(searchInput);
                 showEntries(studentDataset.getSortedStudents());
                 inputString.setText("");
             }
-        });
+        };
+        search.addActionListener(searchAction);
+        inputString.addActionListener(searchAction);
         sort.addActionListener(e -> {
             if (studentDataset.getDataset() != null) {
                 studentDataset.sortStudentsByName();
