@@ -24,7 +24,7 @@ public class WindowHandler extends JFrame {
             
             use input field to look up students
             
-            generated files contain filtered entries
+            generated files contain unfiltered entries
             """;
 
     private JFrame frame;
